@@ -3,6 +3,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ public class StreamsExamples {
 	static List<Employee> employeeList = new ArrayList<Employee>();
 
 	static {
+		employeeList.add(new Employee(111, "Jiya Brein", 32, "Female", "HR", 2011, 25000.0));
 		employeeList.add(new Employee(111, "Jiya Brein", 32, "Female", "HR", 2011, 25000.0));
 		employeeList.add(new Employee(122, "Paul Niksui", 25, "Male", "Sales And Marketing", 2015, 13500.0));
 		employeeList.add(new Employee(133, "Martin Theron", 29, "Male", "Infrastructure", 2012, 18000.0));
@@ -96,8 +98,16 @@ public class StreamsExamples {
 		// System.out.println("\n");
 		
 		// Query 17: Highest Paid Employee on each Department?
-		method17();
+		//method17();
+		
+		// Query 18: Remove Duplicate Employee?
+		method18();
 
+	}
+
+	private static void method18() {
+		List<Employee> uniqueEmployees = employeeList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()-> new TreeSet<>(Comparator.comparingInt(Employee::getId))), ArrayList::new));
+		System.out.println(uniqueEmployees);
 	}
 
 	private static void method17() {
